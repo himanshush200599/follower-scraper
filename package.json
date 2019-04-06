@@ -13,5 +13,9 @@
     "instagram"
   ],
   "author": "Himanshu sharma",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "cheerio": "^1.0.0-rc.2"
+  }
 }
