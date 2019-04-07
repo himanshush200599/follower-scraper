@@ -1,17 +1,28 @@
+const express = require("express");
+
 const {
-  getTwitterFollowers,
   getHTML,
-  getInstagramFollowers
+  getTwitterCount,
+  getInstagramCount
 } = require("./root/scrapper");
 
-async function functionReady() {
-  const usernametw = "narendramodi";
-  const igusername = "aws_javascript";
-  const html = await getHTML(`https://twitter.com/${usernametw}`);
-  const html1 = await getHTML(`https://instagram.com/${igusername}`);
-  const follCount = await getTwitterFollowers(html);
-  const igCount = await getInstagramFollowers(html1);
-  console.log(`${usernametw} have ${follCount} twitter followers`);
-  console.log(`${igusername} have ${igCount} Instagram followers`);
-}
-functionReady();
+const db = require("./root/db");
+require("./root/cron");
+const app = express();
+app.get("/scrape", async (req, res, next) => {
+  console.log("Scraping..");
+  const [iCount, tCount] = await Promise.all([
+    getInstagramCount(),
+    getTwitterCount()
+  ]);
+  console.log(iCount, tCount);
+
+  res.json({
+    iCount,
+    tCount
+  });
+});
+
+app.listen(5000, () => {
+  console.log("Server is running on port 5000");
+});
