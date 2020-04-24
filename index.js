@@ -32,5 +32,5 @@ app.get("/data", async (req, res, next) => {
 });
 
 app.listen(5000, () => {
-  console.log("Server is running on port http://localhost:5000");
+  console.log("Server is running on port http://localhost:5000 and client on 3000");
 });
